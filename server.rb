@@ -98,7 +98,7 @@ get '/rank' do
   str += "<table border='1'>"
   str += "<tr><td>Rank</td><td>Name</td><td>Classifier</td><td>Root Mean Squared Error</td><td>Mean Absolute Error</td><td>Correctly Classified Instances</td></tr>"
   for i in 0 ... $top_test.size
-    info = $top_train[i]
+    info = $top_test[i]
     str += "<tr><td>#{i+1}</td><td>#{info['name']}</td><td>#{info['classifier']}</td><td>#{info['Root mean squared error']}</td><td>#{info['Mean absolute error']}</td><td>#{info['Correctly Classified Instances']}</td></tr>"
   end
   str += "</table><br><br>"
