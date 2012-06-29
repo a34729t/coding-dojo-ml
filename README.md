@@ -1,7 +1,7 @@
-# TODOS:
--verify weka train command is alright, catch errors, create model file, exceptions, etc
--weka command to test data
--write client to do this
+TODOS:
+* verify weka train command is alright, catch errors, create model file, exceptions, etc
+* weka command to test data
+* write client to do this
 
 Contents:
 * Gemfile bundler file
