@@ -55,7 +55,7 @@ class MyApp < Sinatra::Base
   
       # Call Weka, see how long it takes
       t0 = Time.now
-      output = `java -cp weka.jar #{classifier} -t #{filename}.arff -i -k -d #{filename}.model`
+      output = `java -cp weka.jar #{classifier} -t #{filename}.arff -i -k -d #{filename}.model 2>&1`
       t1 = Time.now - t0
       `rm #{filename}.arff #{filename}.model` # clean up
     
@@ -100,7 +100,7 @@ class MyApp < Sinatra::Base
   
       # Call Weka, see how long it takes
       t0 = Time.now
-      output = `java -cp weka.jar #{classifier} -t #{filename}.arff -T #{filenameTest}.arff`
+      output = `java -cp weka.jar #{classifier} -t #{filename}.arff -T #{filenameTest}.arff 2>&1`
       t1 = Time.now - t0
       `rm #{filename}.arff #{filenameTest}.arff` # clean up
     
