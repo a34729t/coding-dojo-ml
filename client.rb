@@ -11,5 +11,5 @@ featuresTrain = File.read(filename)
 
 params = {:name => name, :classifier => classifier, :featuresTrain => featuresTrain}
 
-x = Net::HTTP.post_form(URI.parse('http://localhost:4567/classify/train'), params)
+x = Net::HTTP.post_form(URI.parse('http://dojo.v.wc1.atti.com/classify/train'), params)
 puts "return: "+x.body
