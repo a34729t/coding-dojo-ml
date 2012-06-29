@@ -53,8 +53,6 @@ class MyApp < Sinatra::Base
       filename = (0...8).map{65.+(rand(25)).chr}.join
       File.open(filename+".arff", 'w') {|f| f.write(featuresTrain) }
   
-      puts featuresTrain
-  
       # Call Weka, see how long it takes
       t0 = Time.now
       output = `java -cp weka.jar #{classifier} -t #{filename}.arff -i -k -d #{filename}.model`
@@ -194,8 +192,6 @@ class MyApp < Sinatra::Base
     classifier = params[:classifier]
     featuresTrain = params[:featuresTrain]
     featuresTest = params[:featuresTest]
-  
-    puts featuresTest
   
     return classifyTest(name,classifier,featuresTrain,featuresTest)
   end
