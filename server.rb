@@ -96,7 +96,7 @@ get '/rank' do
   # Testing
   str += '<h2>TEST LEADERBOARD</h2>'
   str += "<table border='1'>"
-  str += "<tr><td>Rank</td><td>Name</td><td>Classifier</td><td>Root mean squared error</td><td>Mean absolute error</td><td>Correctly Classified Instances</td></tr>"
+  str += "<tr><td>Rank</td><td>Name</td><td>Classifier</td><td>Root Mean Squared Error</td><td>Mean Absolute Error</td><td>Correctly Classified Instances</td></tr>"
   for i in 0 ... $top_test.size
     info = $top_train[i]
     str += "<tr><td>#{i+1}</td><td>#{info['name']}</td><td>#{info['classifier']}</td><td>#{info['Root mean squared error']}</td><td>#{info['Mean absolute error']}</td><td>#{info['Correctly Classified Instances']}</td></tr>"
