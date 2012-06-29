@@ -9,7 +9,7 @@ filename = 'sample.arff'
 featuresTrain = File.read(filename)
 
 
-params = {:name => name, :classifier => classifier, :featuresTrain => featuresTrain}
+params = {:name => name, :classifier => classifier, :featuresTrain => featuresTrain, :featuresTest => featuresTrain}
 
-x = Net::HTTP.post_form(URI.parse('http://dojo.v.wc1.atti.com/classify/train'), params)
+x = Net::HTTP.post_form(URI.parse('http://localhost:8080/classify/test'), params)
 puts "return: "+x.body

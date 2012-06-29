@@ -23,12 +23,23 @@ end
 def update_training_rank(fmeasure,data)
   for i in 0 ... $top_train.size
     info = $top_train[i]
-    if info['F-Measure'] < fmeasure
+    if info['F-Measure'] > fmeasure
       $top_train.insert(i,data)
       return
     end
   end
   $top_train << data
+end
+
+def update_testing_rank(rms,data)
+  for i in 0 ... $top_test.size
+    info = $top_test[i]
+    if info['Root mean squared error'] < rms
+      $top_test.insert(i,data)
+      return
+    end
+  end
+  $top_test << data  
 end
 
 def classify(name,classifier,featuresTrain,featuresTest=nil)
@@ -73,6 +84,49 @@ def classify(name,classifier,featuresTrain,featuresTest=nil)
   
 end
 
+def classifyTest(name,classifier,featuresTrain,featuresTest)
+  if featuresTest and $locked
+    ret = {:error => "test data is locked, play with training data some more"}
+    halt ret.to_json
+  end
+  
+  #begin
+    #Generate a random file and write features to it
+    filename = (0...8).map{65.+(rand(25)).chr}.join
+    File.open(filename+".arff", 'w') {|f| f.write(featuresTrain) }
+    
+    filenameTest = (0...8).map{65.+(rand(25)).chr}.join
+    File.open(filenameTest+".arff", 'w') {|f| f.write(featuresTest) }
+  
+    # Call Weka, see how long it takes
+    t0 = Time.now
+    output = `java -cp weka.jar #{classifier} -t #{filename}.arff -T #{filenameTest}.arff`
+    t1 = Time.now - t0
+    `rm #{filename}.arff #{filenameTest}.arff` # clean up
+    
+    # Get the cliffnotes on training statistics
+    # Line looks like: Weighted Avg. 0.941 0.007 0.946 0.941 0.939 0.999 0.985 
+    rms = output[/Root mean squared error\s+(.*)\s*\n/] 
+    if rms
+      rms = $1
+      rank_info = {"name" => name, "classifier" => classifier, "Root mean squared error" => rms}
+      update_testing_rank(rms, rank_info) # update leader board
+      
+      # print json response
+    	testing = {:time => t1, :classifier => classifier, :RMS => rms, :wekaOutput => output}
+    	return testing.to_json
+    else
+      ret = {:error => "you fucked something up", :output => output}
+      return ret.to_json
+    end
+  #rescue Exception=>e
+  #  ret = {:error => e}
+  #  puts "Exception on generate random file or something: #{e}"
+  #  return ret.to_json
+  #end
+  
+end
+
 get '/help' do
   # classifiers - any weka classifier
   # 1) weka.classifiers.bayes.NaiveBayes
@@ -96,10 +150,10 @@ get '/rank' do
   # Testing
   str += '<h2>TEST LEADERBOARD</h2>'
   str += "<table border='1'>"
-  str += "<tr><td>Rank</td><td>Name</td><td>Classifier</td><td>Root Mean Squared Error</td><td>Mean Absolute Error</td><td>Correctly Classified Instances</td></tr>"
+  str += "<tr><td>Rank</td><td>Name</td><td>Classifier</td><td>Root Mean Squared Error</td></tr>"
   for i in 0 ... $top_test.size
     info = $top_test[i]
-    str += "<tr><td>#{i+1}</td><td>#{info['name']}</td><td>#{info['classifier']}</td><td>#{info['Root mean squared error']}</td><td>#{info['Mean absolute error']}</td><td>#{info['Correctly Classified Instances']}</td></tr>"
+    str += "<tr><td>#{i+1}</td><td>#{info['name']}</td><td>#{info['classifier']}</td><td>#{info['Root mean squared error']}</td></tr>"
   end
   str += "</table><br><br>"
   
@@ -139,7 +193,7 @@ post '/classify/test' do
   featuresTrain = params[:featuresTrain]
   featuresTest = params[:featuresTest]
   
-  return classify(name,classifier,featuresTrain,featuresTest)
+  return classifyTest(name,classifier,featuresTrain,featuresTest)
 end
 
 get '/unlocktestdata' do
