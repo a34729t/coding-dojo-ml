@@ -12,7 +12,7 @@ DATA PROCESSING
 * You can play around with the values or ranges of values for your features in the ARFF file itself
 
 TRAINING
-* POST to http://dojo.v.wc1.atti.com/train with params name (your name), classifier (weka classifier name) and featuresTrain (the string version of your ARFF file)
+* POST to http://dojo.v.wc1.atti.com/train with params name (your name), classifier (weka classifier name, see list below) and featuresTrain (the string version of your ARFF file)
 * You get back a json response with statistics on how well you performed
 * Check your performance vs others at http://dojo.v.wc1.atti.com/rank
 
@@ -23,6 +23,13 @@ TESTING
 * POST to http://dojo.v.wc1.atti.com/train with params name classifier, featuresTrain and featuresTest
 
 NOTES
-* Weka has a number of classifiers available- weka.classifiers.trees.J48, weka.classifiers.bayes.NaiveBayes and fancier stuff
 * I would recommend using Naive Bayes and the Decision Tree first as they give you good feedback about which features are useful
 * Machine Learning is about quality data and features- what model you use is much less important
+
+WEKA CLASSIFIERS (In order of simplest to more complicated)
+* weka.classifiers.bayes.NaiveBayes
+* weka.classifiers.trees.J48
+* weka.classifiers.functions.Logistic
+* weka.classifiers.lazy.kstar
+* weka.classifiers.rules.JRip
+* weka.classifiers.functions.SMO
