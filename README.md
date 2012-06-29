@@ -26,7 +26,7 @@
 * I would recommend using Naive Bayes and the Decision Tree first as they give you good feedback about which features are useful
 * Machine Learning is about quality data and features—what model you use is much less important
 
-### WEKA CLASSIFIERS (In order of simplest to more complicated)
+### WEKA CLASSIFIERS (From simplest to more complicated)
 * weka.classifiers.bayes.NaiveBayes
 * weka.classifiers.trees.J48
 * weka.classifiers.functions.Logistic
