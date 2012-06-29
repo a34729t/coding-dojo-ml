@@ -2,6 +2,8 @@ require 'sinatra'
 require 'sinatra/synchrony'
 require 'json'
 
+set :port, 8080
+
 $top_train = []
 $top_test = []
 $locked = true
