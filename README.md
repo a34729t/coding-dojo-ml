@@ -8,6 +8,7 @@
 ### DATA PROCESSING
 * Download training data tarball from http://dojo.v.wc1.atti.com/data/train
 * Weka accepts ARFF files: http://www.cs.waikato.ac.nz/ml/weka/arff.html
+  * See https://github.com/a34729t/coding-dojo-ml/blob/master/sample.arff
 * Each training or test file becomes a vector of features
 * You can play around with the values or ranges of values for your features in the ARFF file itself
 
@@ -16,6 +17,7 @@
   * name (your name)
   * classifier (weka classifier name, see list below)
   * featuresTrain (your ARFF file)
+* See https://github.com/a34729t/coding-dojo-ml/blob/master/client.rb for a sample client
 * You get back a JSON response with statistics on how well you performed
 * Check your performance vs others at http://dojo.v.wc1.atti.com/rank
 
