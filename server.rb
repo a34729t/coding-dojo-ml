@@ -61,8 +61,6 @@ class MyApp < Sinatra::Base
       t1 = Time.now - t0
       `rm #{filename}.arff #{filename}.model` # clean up
     
-      puts output 
-    
       # Get the cliffnotes on training statistics
       # Line looks like: Weighted Avg. 0.941 0.007 0.946 0.941 0.939 0.999 0.985 
       end_of_output = output[/Stratified cross-validation.*/m] 
