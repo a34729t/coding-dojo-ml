@@ -13,7 +13,7 @@
 * You can play around with the values or ranges of values for your features in the ARFF file itself
 
 ### TRAINING
-* POST to http://dojo.v.wc1.atti.com/train with the following params:
+* POST to http://dojo.v.wc1.atti.com/classify/train with the following params:
   * name (your name)
   * classifier (weka classifier name, see list below)
   * featuresTrain (your ARFF file)
@@ -25,7 +25,7 @@
 * After a certain period of time we will allow you to access the training data
 * Download test data tarball from http://dojo.v.wc1.atti.com/data/test
 * Process the test data with the same features you use for training data
-* POST to http://dojo.v.wc1.atti.com/train with params:
+* POST to http://dojo.v.wc1.atti.com/classify/train with params:
   * name
   * classifier
   * featuresTrain
