@@ -6,7 +6,7 @@ set :port, 8080
 
 $top_train = []
 $top_test = []
-$locked = true
+$locked = false
 class MyApp < Sinatra::Base
   def validateParams(params,*required)
     if required
